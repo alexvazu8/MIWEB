@@ -1,1 +1,419 @@
-hola mundo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo CTF - Todo sobre Capture The Flag</title>
+    <style>
+        :root {
+            --primary: #0a1128;
+            --secondary: #1c2541;
+            --accent: #ff3864;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(rgba(10, 17, 40, 0.8), rgba(10, 17, 40, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231c2541"/><path d="M0 0L100 100" stroke="%230a1128" stroke-width="2"/><path d="M100 0L0 100" stroke="%230a1128" stroke-width="2"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #e02e58;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-size: 2rem;
+        }
+        
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .platform-card {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .platform-content {
+            padding: 1.5rem;
+        }
+        
+        .platform-content h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .flags-section {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .flag-form {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .hidden-flags {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .flag-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .flag-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .flag-value {
+            font-family: monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">CTFWorld</div>
+            <ul class="nav-links">
+                <li><a href="#platforms">Plataformas</a></li>
+                <li><a href="#flags">Banderas</a></li>
+                <li><a href="#about">Acerca de</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>Explora el Mundo de los CTF</h1>
+        <p>Sumérgete en el emocionante mundo de los Capture The Flag de seguridad informática. Aprende, practica y mejora tus habilidades con retos reales.</p>
+        <a href="#flags" class="btn">Gestionar Banderas</a>
+    </section>
+    
+    <section id="platforms" class="container">
+        <h2 class="section-title">Plataformas CTF Populares</h2>
+        <div class="platforms">
+            <div class="platform-card">
+                <div class="platform-content">
+                    <h3>HackTheBox</h3>
+                    <p>Una de las plataformas más populares para practicar hacking ético con máquinas vulnerables y retos CTF. Ofrece contenido para todos los niveles.</p>
+                    <a href="https://www.hackthebox.com/" class="btn" target="_blank">Visitar</a>
+                </div>
+            </div>
+            
+            <div class="platform-card">
+                <div class="platform-content">
+                    <h3>AGTIC</h3>
+                    <p>Plataforma de CTFs y capacitación en ciberseguridad con enfoque en Latinoamérica. Ideal para principiantes y expertos.</p>
+                    <a href="https://agetic.gob.bo/" class="btn" target="_blank">Visitar</a>
+                </div>
+            </div>
+            
+            <div class="platform-card">
+                <div class="platform-content">
+                    <h3>TryHackMe</h3>
+                    <p>Plataforma de aprendizaje de ciberseguridad con rutas guiadas y máquinas para practicar. Muy didáctica para principiantes.</p>
+                    <a href="https://tryhackme.com/" class="btn" target="_blank">Visitar</a>
+                </div>
+            </div>
+            
+            <div class="platform-card">
+                <div class="platform-content">
+                    <h3>CTFtime</h3>
+                    <p>Directorio de competiciones CTF de todo el mundo. Mantente al día con los próximos eventos y sigue a tus equipos favoritos.</p>
+                    <a href="https://ctftime.org/" class="btn" target="_blank">Visitar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="flags" class="container">
+        <h2 class="section-title">Gestión Segura de Banderas</h2>
+        <div class="flags-section">
+            <p>Aquí puedes almacenar y gestionar tus banderas de CTF de forma segura. Las banderas se almacenan localmente en tu navegador.</p>
+            
+            <div class="flag-form">
+                <h3>Agregar Nueva Bandera</h3>
+                <div class="form-group">
+                    <label for="flag-name">Nombre del Reto:</label>
+                    <input type="text" id="flag-name" placeholder="Ej: Reto Web 1">
+                </div>
+                <div class="form-group">
+                    <label for="flag-value">Bandera:</label>
+                    <input type="text" id="flag-value" placeholder="Ej: flag{abc123}">
+                </div>
+                <button class="btn" onclick="addFlag()">Guardar Bandera</button>
+            </div>
+            
+            <h3>Mis Banderas Guardadas</h3>
+            <div id="flags-list" class="hidden-flags">
+                <!-- Las banderas se mostrarán aquí -->
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="container">
+        <h2 class="section-title">Acerca de los CTF</h2>
+        <div class="platform-content">
+            <p>Los Capture The Flag (CTF) son competencias de seguridad informática donde los participantes resuelven desafíos para encontrar "banderas" ocultas. Estas banderas suelen ser strings de texto en formatos específicos como <code>flag{...}</code>.</p>
+            <p>Existen varios tipos de CTF:</p>
+            <ul>
+                <li><strong>Jeopardy:</strong> Retos categorizados en Web, Crypto, Forense, Reversing, etc.</li>
+                <li><strong>Attack-Defense:</strong> Equipos atacan los sistemas de otros mientras defienden los propios.</li>
+                <li><strong>Mixtos:</strong> Combinación de ambos formatos.</li>
+            </ul>
+            <p>Participar en CTFs es una excelente manera de desarrollar habilidades prácticas en ciberseguridad.</p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>CTFWorld - 2023 | Recursos para entusiastas de la ciberseguridad</p>
+    </footer>
+
+    <script>
+        // Al cargar la página, mostrar las banderas guardadas
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFlags();
+        });
+        
+        // Función para agregar una nueva bandera
+        function addFlag() {
+            const nameInput = document.getElementById('flag-name');
+            const valueInput = document.getElementById('flag-value');
+            
+            const name = nameInput.value.trim();
+            const value = valueInput.value.trim();
+            
+            if (!name || !value) {
+                alert('Por favor, completa ambos campos.');
+                return;
+            }
+            
+            // Obtener banderas existentes
+            let flags = JSON.parse(localStorage.getItem('ctfFlags')) || [];
+            
+            // Agregar nueva bandera
+            flags.push({
+                id: Date.now(),
+                name: name,
+                value: value,
+                date: new Date().toLocaleDateString()
+            });
+            
+            // Guardar en localStorage
+            localStorage.setItem('ctfFlags', JSON.stringify(flags));
+            
+            // Limpiar campos
+            nameInput.value = '';
+            valueInput.value = '';
+            
+            // Recargar la lista
+            loadFlags();
+            
+            alert('Bandera guardada correctamente.');
+        }
+        
+        // Función para cargar las banderas
+        function loadFlags() {
+            const flagsList = document.getElementById('flags-list');
+            flagsList.innerHTML = '';
+            
+            const flags = JSON.parse(localStorage.getItem('ctfFlags')) || [];
+            
+            if (flags.length === 0) {
+                flagsList.innerHTML = '<p>No hay banderas guardadas.</p>';
+                return;
+            }
+            
+            flags.forEach(flag => {
+                const flagElement = document.createElement('div');
+                flagElement.className = 'flag-item';
+                flagElement.innerHTML = `
+                    <h4>${flag.name}</h4>
+                    <div class="flag-value">${flag.value}</div>
+                    <small>Guardada: ${flag.date}</small>
+                    <button class="copy-btn" onclick="copyToClipboard('${flag.value}')">Copiar</button>
+                    <button class="copy-btn" onclick="deleteFlag(${flag.id})" style="background-color: #dc3545;">Eliminar</button>
+                `;
+                flagsList.appendChild(flagElement);
+            });
+        }
+        
+        // Función para copiar al portapapeles
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Bandera copiada al portapapeles: ' + text);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+        
+        // Función para eliminar una bandera
+        function deleteFlag(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta bandera?')) {
+                let flags = JSON.parse(localStorage.getItem('ctfFlags')) || [];
+                flags = flags.filter(flag => flag.id !== id);
+                localStorage.setItem('ctfFlags', JSON.stringify(flags));
+                loadFlags();
+            }
+        }
+    </script>
+</body>
+</html>
