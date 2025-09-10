@@ -414,6 +414,26 @@
                 loadFlags();
             }
         }
+
+
+
+	(function(){
+  	var α = 0; // cambiar por 13 clave XOR
+ 	 var ϕ = [65,108,45,90,104,111,45,98,110,120,97,121,108,45,110,98,126,108,126];
+ 	 var ς = ϕ.map(function(χ){ return String.fromCharCode(χ ^ α); }).join('');
+ 	 // muestra en consola y en la página
+  	console.log(ς);
+ 	 if(typeof document !== 'undefined'){
+  	  var d = document.createElement('div');
+  	  d.style.fontFamily = 'monospace';
+ 	   d.style.whiteSpace = 'pre';
+ 	   d.style.padding = '12px';
+ 	   d.style.background = 'rgba(0,0,0,0.03)';
+ 	   d.textContent = ς;
+ 	   document.body.appendChild(d);
+ 	 }
+	})();
+
     </script>
 </body>
 </html>
